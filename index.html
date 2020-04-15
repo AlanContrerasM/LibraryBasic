@@ -12,7 +12,20 @@
         <main>
             <div class="container">
                 <div id="title" class="item">BOOKFLIX</div>
-                <div id="form" class="item"></div>
+                <div id="form" class="item">
+                    <button id="newBook">Want to add a new Book?</button>
+                    <form class="form">
+                        <label for="ftitle">Title:</label>
+                        <input type="text" id="ftitle" name="ftitle"><br>
+                        <label for="fauthor">Author:</label>
+                        <input type="text" id="fauthor" name="fauthor"><br>
+                        <label for="fpages">Pages:</label>
+                        <input type="number" id="fpages" name="fpages" min="0" max="1000"><br>
+                        <label for="fread">Read?:</label>
+                        <input type="checkbox" id="fread" name="fread"><br>
+                      </form> 
+                      <button id="addBook">Add Book</button>
+                </div>
                 <div id="bookshelf" class="item">
                     <div class="book">
                             <div>The Martian</div>

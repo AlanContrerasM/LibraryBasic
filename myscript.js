@@ -1,6 +1,13 @@
-const bookshelf = document.querySelector("#bookshelf")
-let changeReads = document.querySelectorAll(".changeRead")
-let deleteBooks = document.querySelectorAll("deleteBook")
+const bookshelf = document.querySelector("#bookshelf");
+let changeReads = document.querySelectorAll(".changeRead");
+let deleteBooks = document.querySelectorAll(".deleteBook");
+const form = document.querySelector(".form")
+const newBook = document.querySelector("#newBook");
+const addBook = document.querySelector("#addBook");
+const newTitle   = document.querySelector("#ftitle")
+const newAuthor = document.querySelector("#fauthor")
+const newPages = document.querySelector("#fpages")
+const newRead = document.querySelector("#fread")
 
 
 let myLibrary = [];
@@ -45,8 +52,20 @@ myLibrary.push(book2);
 //calling the function render
 render();
 
+//click event for newBook button
+newBook.onclick = function(e){ 
+    console.log("clicked newBook")
+    createForm();
+}
 
 
+//click event for addBook button
+addBook.onclick = function (e){
+    console.log("clicked addBook")
+    addBookToLibrary();
+}
+
+//render books on the window
 function render(){
     //clear all books from div
     bookshelf.innerHTML = ""
@@ -170,27 +189,52 @@ function createDeleteClickEvent(e){
 }
 
 
+
+
+
 function addBookToLibrary() {
     // do stuff here
+    myLibrary.push(new Book(newTitle.value, newAuthor.value, newPages.value, newRead.checked));
+    render();
+    hideForm();
+
   }
 
 
-function resetForm(){
+function createForm(){
+    form.style.display = "block";
+    addBook.style.display = "block";
+    resetValues();
 
 }
 
+function hideForm(){
+    console.log("object created, hiding form")
+    form.style.display = "none";
+    addBook.style.display = "none";
 
-
-function deleteBook(book){
-    const index = comments.findIndex(comment => comment.id === 823423);
-    console.log(index);
-
-
-    // we can either do a splice or call undefined on the index
-    // we should do undefined as we will control the functionalities of
-    // each book through their ids and index
-    comments.splice(index,1)
-    console.log(comments)
 
 }
+
+function resetValues(){
+    newTitle.value = ""
+    newAuthor.value = ""
+    newPages.value = ""
+    newRead.checked = ""
+}
+
+
+//not used but good to know if we need a reference.
+// function deleteBook(book){
+//     const index = comments.findIndex(comment => comment.id === 823423);
+//     console.log(index);
+
+
+//     // we can either do a splice or call undefined on the index
+//     // we should do undefined as we will control the functionalities of
+//     // each book through their ids and index
+//     comments.splice(index,1)
+//     console.log(comments)
+
+// }
 
