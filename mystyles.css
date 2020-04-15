@@ -29,6 +29,7 @@ html, body{
     background-image: url(img/2c67ec6be109e646edc8480b6fd2ecb7.jpg);
     background-repeat: no-repeat;
     background-size: cover;
+    background-position: center;
 }
 
 #title{
