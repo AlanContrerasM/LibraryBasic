@@ -21,7 +21,7 @@ html, body{
 
 #bookshelf{
 
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(150px, 2fr));
     gap: 2em;
 }
 .book{
@@ -30,6 +30,8 @@ html, body{
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
+    height: 100%;
+    align-items: center;
 }
 
 #title{
