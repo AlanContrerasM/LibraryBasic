@@ -37,17 +37,83 @@ Book.prototype.updateRead = function(){
         this.read = false;
     } else this.read = true;
 }
-//first three books
 
-const book0 = new Book("Percy Jackson","Rick Riordan", 500, true)
+
+//first three books
+//we can push it directly or create a const and push the const
+myLibrary.push(new Book("Percy Jackson","Rick Riordan", 500, true));
+
+myLibrary.push(new Book("The Martian","Andy Weir", 400, true));
+
+const book0 = new Book("Sapiens","Unknown", 550, false)
 myLibrary.push(book0);
 
-const book1 = new Book("The Martian","Andy Weir", 400, true)
-myLibrary.push(book1);
 
-const book2 = new Book("Sapiens","Unknown", 550, false)
-myLibrary.push(book2);
 
+
+
+
+//setting up local Storage if available, the function is defined at the end...
+let hasLocalStorage = true;
+
+if (storageAvailable('localStorage')) {
+    // Yippee! We can use localStorage awesomeness
+    console.log("has local storage")
+
+    if(!localStorage.length) {
+        console.log("empty, will save on storage myLibrary")
+        setStorage();
+      } else {
+          console.log("already has data, will pull")
+        getStorage();
+      }
+} else {
+    // Too bad, no localStorage for us
+    hasLocalStorage = false;
+    console.log("does not have localStorage")
+}
+
+function setStorage(){
+    let iLength = localStorage.length;
+    //first we delete current localStorage
+    for(i=0; i<iLength; i++){
+        localStorage.removeItem(i);
+    }
+
+    // we update localStorage according to myLibrary
+    myLibrary.forEach((e,index)=>{
+        let bookString;
+        if(e == undefined){
+            bookString == undefined
+        }else{
+            bookString = e.title + "," +
+                            e.author + "," +
+                            e.pages + "," +
+                            e.read;
+        }
+        
+        localStorage.setItem(index,bookString)
+    })
+
+}
+
+// Not needed finally
+// function updateStorageCounter(){
+//     const currentCounter = Number(localStorage.getItem("counter"));
+//     storageCounter ++
+//     localStorage.setItem("counter", storageCounter)
+//     console.log(storageCounter);
+// }
+
+function getStorage(){
+    myLibrary =[]
+    let iLength = localStorage.length;
+    for(i=0; i<iLength; i++){
+        const arr = localStorage.getItem(i).split(",");
+        myLibrary[i] = new Book(arr[0],arr[1],arr[2],arr[3])
+        console.table(myLibrary);
+    }
+}
 
 //calling the function render
 render();
@@ -67,6 +133,11 @@ addBook.onclick = function (e){
 
 //render books on the window
 function render(){
+    //If render is called, then we updated something on myLybrary
+    //we have to send it to localStorage
+    setStorage();
+
+
     //clear all books from div
     bookshelf.innerHTML = ""
     console.log("cleaned books")
@@ -97,7 +168,7 @@ function createDivsAndAppend(element,index){
             
         </div>
     </div> */
-    if(element ==undefined){
+    if(element ==undefined || element.title == "undefined"){
         console.log("index " +index+ " is undefined. Skipping...")
         return;
     }
@@ -238,3 +309,28 @@ function resetValues(){
 
 // }
 
+
+function storageAvailable(type) {
+    var storage;
+    try {
+        storage = window[type];
+        var x = '__storage_test__';
+        storage.setItem(x, x);
+        storage.removeItem(x);
+        return true;
+    }
+    catch(e) {
+        return e instanceof DOMException && (
+            // everything except Firefox
+            e.code === 22 ||
+            // Firefox
+            e.code === 1014 ||
+            // test name field too, because code might not be present
+            // everything except Firefox
+            e.name === 'QuotaExceededError' ||
+            // Firefox
+            e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
+            // acknowledge QuotaExceededError only if there's something already stored
+            (storage && storage.length !== 0);
+    }
+}
