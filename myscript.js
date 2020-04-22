@@ -1,3 +1,6 @@
+//We are on branch class, where we used class,
+// if you go 1 commit down we have this excersice with function objects, basically the same 
+
 const bookshelf = document.querySelector("#bookshelf");
 let changeReads = document.querySelectorAll(".changeRead");
 let deleteBooks = document.querySelectorAll(".deleteBook");
@@ -12,15 +15,15 @@ const newRead = document.querySelector("#fread")
 
 let myLibrary = [];
 
-function Book(title, author, pages, read){
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.read = read;
-}
-
-Book.prototype.info = function() {
-    let info = this.title + " by " + this.author + ", " +
+class Book{
+    constructor(title, author, pages, read){
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.read = read;
+    }
+    info (){
+        let info = this.title + " by " + this.author + ", " +
         this.pages + " pages, ";
 
         if(this.read == true){
@@ -28,14 +31,13 @@ Book.prototype.info = function() {
         } else info += "not read yet.";
 
         return info;
-  }
-
-
-Book.prototype.updateRead = function(){
-    console.log("will change read for: "+ this.info())
-    if(this.read) {
-        this.read = false;
-    } else this.read = true;
+    };
+    updateRead(){
+        console.log("will change read for: "+ this.info())
+        if(this.read) {
+            this.read = false;
+        } else this.read = true;
+    }
 }
 
 
